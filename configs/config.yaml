@@ -1,0 +1,10 @@
+database:
+  host: "localhost"
+  port: "3306"
+  user: "root"
+  password: "root"
+  name: "bri-mini-project"
+
+jwt:
+  secretKey: "your_secret_key"
+  expiresIn: "1h0m0s"
