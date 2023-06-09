@@ -9,7 +9,7 @@ const (
 )
 
 type Account struct {
-	ID             int            `gorm:"primaryKey"`
+	ID             string         `gorm:"primaryKey"`
 	Username       string         `gorm:"not null; unique"`
 	Password       string         `json:"-"`
 	Role           string         `gorm:"not null; default:'admin'"`

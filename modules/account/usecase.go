@@ -57,19 +57,13 @@ func (usecase *useCase) GetAdminsWithConditions(keyword, page, limit string) ([]
 }
 
 func (usecase *useCase) GetAll() ([]*entities.Account, error) {
-	admins, err := usecase.accRepo.ReadAll()
+	admins, _ := usecase.accRepo.ReadAll()
 
-	if err != nil {
-		return nil, err
-	}
 	return admins, nil
 }
 func (usecase *useCase) GetWaitingApproval() ([]*entities.Account, error) {
-	accounts, err := usecase.accRepo.GetWaitingApproval()
+	accounts, _ := usecase.accRepo.GetWaitingApproval()
 
-	if err != nil {
-		return nil, err
-	}
 	return accounts, nil
 }
 func (usecase *useCase) SearchByUsername(username string) (*entities.Account, error) {
