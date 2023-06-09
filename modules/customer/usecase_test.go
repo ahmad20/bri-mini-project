@@ -255,3 +255,59 @@ func Test_useCase_GetCustomersWithConditions(t *testing.T) {
 		})
 	}
 }
+
+func Test_useCase_GetAll(t *testing.T) {
+	mockRepo := &mocks.CustomerRepositoryInterface{}
+	type wants struct {
+		custs []*entities.Customer
+		err   error
+	}
+	tests := []struct {
+		name    string
+		usecase *useCase
+		want    wants
+		wantErr bool
+	}{
+		// TODO: Add test cases.
+		{
+			name: "Success",
+			usecase: &useCase{
+				custRepo: mockRepo,
+			},
+			want: wants{
+				custs: []*entities.Customer{
+					{
+						ID:         1,
+						Email:      "johndoe@email.com",
+						First_Name: "john",
+						Last_Name:  "doe",
+					},
+					{
+						ID:         1,
+						Email:      "davidjoel@email.com",
+						First_Name: "david",
+						Last_Name:  "joel",
+					},
+				},
+				err: nil,
+			},
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			mockRepo.On("ReadAll").Return(tt.want.custs, tt.want.err)
+			got, err := tt.usecase.GetAll()
+			if (err != nil) != tt.wantErr {
+				t.Errorf("useCase.GetAll() error = %v, wantErr %v", (err != nil), tt.wantErr)
+			}
+			if err != nil && err.Error() != tt.want.err.Error() {
+				t.Errorf("useCase.GetAll() error = %v, want %v", err, tt.want.err)
+			}
+			if !reflect.DeepEqual(got, tt.want.custs) {
+				t.Errorf("useCase.GetAll() = %v, want %v", got, tt.want.custs)
+			}
+			mockRepo.AssertExpectations(t)
+		})
+	}
+}
